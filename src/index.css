@@ -1,2 +1,12 @@
 @import "tailwindcss";
 
+@layer base {
+  * {
+    font-family: 'Amaranth', sans-serif;
+  }
+  
+  body {
+    font-family: 'Amaranth', sans-serif;
+  }
+}
+

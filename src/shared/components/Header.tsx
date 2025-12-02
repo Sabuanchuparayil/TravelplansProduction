@@ -33,9 +33,9 @@ const Header: React.FC = () => {
            <h1 className="text-xl font-semibold text-gray-800 hidden sm:block">Welcome, {user.name}</h1>
         </div>
         <div className="flex items-center space-x-4">
-          <button 
+          <div 
             onClick={() => setProfileModalOpen(true)}
-            className="flex items-center text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg p-1"
+            className="flex items-center text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg p-1 cursor-pointer"
           >
               <div className="relative flex-shrink-0">
                 <UserCircleIcon className="h-12 w-12 text-gray-400" />
@@ -44,7 +44,7 @@ const Header: React.FC = () => {
                  <p className="text-md font-semibold text-gray-800 group-hover:text-primary transition-colors hidden sm:block">{user.name}</p>
                  <div className="flex flex-wrap items-center gap-1 sm:mt-1">
                     {user.roles.map(role => (
-                        <button 
+                        <span 
                           key={role} 
                           onClick={(e) => {
                             e.stopPropagation(); // Prevent modal from opening when clicking a role
@@ -52,16 +52,15 @@ const Header: React.FC = () => {
                               handleRoleClick(role);
                             }
                           }}
-                          className={`px-2 py-0.5 text-xs font-semibold rounded-full transition-colors focus:outline-none focus:ring-2 ${roleColors[role] || 'bg-gray-100 text-gray-800'} disabled:opacity-70 disabled:cursor-not-allowed`}
+                          className={`px-2 py-0.5 text-xs font-semibold rounded-full transition-colors cursor-pointer ${isAdmin ? 'cursor-pointer' : 'cursor-default'} ${roleColors[role] || 'bg-gray-100 text-gray-800'} ${!isAdmin ? 'opacity-70' : ''}`}
                           title={isAdmin ? `Filter users by role: ${role}` : role}
-                          disabled={!isAdmin}
                         >
                           {role}
-                        </button>
+                        </span>
                     ))}
                  </div>
               </div>
-          </button>
+          </div>
           <button
             onClick={logout}
             className="flex items-center text-sm font-medium text-gray-600 hover:text-primary transition-colors"

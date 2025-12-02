@@ -84,13 +84,22 @@ export const getUserById = async (userId: string): Promise<User | null> => {
 
 export const subscribeToItineraries = (callback: (itineraries: Itinerary[]) => void): Unsubscribe => {
     const itinerariesRef = collection(db, COLLECTIONS.ITINERARIES);
-    return onSnapshot(itinerariesRef, (snapshot: QuerySnapshot<DocumentData>) => {
-        const itineraries = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        })) as Itinerary[];
-        callback(itineraries);
-    });
+    return onSnapshot(
+        itinerariesRef, 
+        (snapshot: QuerySnapshot<DocumentData>) => {
+            const itineraries = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            })) as Itinerary[];
+            callback(itineraries);
+        },
+        (error) => {
+            if (error.code !== 'permission-denied') {
+                console.error('Error subscribing to itineraries:', error);
+            }
+            callback([]);
+        }
+    );
 };
 
 export const addItinerary = async (itinerary: Omit<Itinerary, 'id'>): Promise<string> => {
