@@ -59,3 +59,4 @@ firebase-adminsdk-*.json
 # OS files
 Thumbs.db
 .DS_Store
+.github/workflows/
