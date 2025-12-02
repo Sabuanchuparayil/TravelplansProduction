@@ -38,7 +38,10 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({ onClose, onSubmit, itiner
 
   const { users } = useData();
   const { addToast } = useToast();
-  const agents = useMemo(() => users.filter(u => u.roles.includes(UserRole.AGENT)), [users]);
+  const agents = useMemo(() => {
+    if (!users || users.length === 0) return [];
+    return users.filter(u => u.roles.includes(UserRole.AGENT));
+  }, [users]);
 
   useEffect(() => {
     if (itineraryToEdit) {

@@ -29,7 +29,9 @@ const UserForm: React.FC<UserFormProps> = ({ onClose, onSubmit, userToEdit }) =>
         })) as CustomRole[];
         setCustomRoles(rolesData);
       } catch (error) {
+        // Silently fail - custom roles are optional
         console.error('Error loading custom roles:', error);
+        setCustomRoles([]);
       }
     };
     loadCustomRoles();
